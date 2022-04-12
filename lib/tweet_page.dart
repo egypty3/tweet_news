@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
@@ -198,14 +200,18 @@ class TweetPage extends StatelessWidget {
       'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAAJ1iZgEAAAAACvta9ZpM8dCrnXhqfq9GVfk%2FsjU%3D02MakgCQZchjXiX0kPj2OnHyhJJnLxIuklZYcPsinP0DyHcFo1',
       'Cookie': 'guest_id=v1%3A164598761063792044; guest_id_ads=v1%3A164598761063792044; guest_id_marketing=v1%3A164598761063792044; personalization_id="v1_DmeJTA5R1njcwYbv/ifYfQ=="'
     };
-    var request = http.Request('GET', Uri.parse('https://api.twitter.com/2/tweets/1512557968184729603?tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'));
+    var request = http.Request('GET', Uri.parse('https://api.twitter.com/2/tweets?ids=1502308288704167938,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'));
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      return await response.stream.bytesToString();
+       String responseString =  await response.stream.bytesToString();
+
+       //print(responseString);
+       var map = jsonDecode(responseString);
+       return responseString;
     }
     else {
       return await response.reasonPhrase.toString();
