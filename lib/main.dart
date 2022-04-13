@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           OpenTweetPageButton(
             title: "Tweet Photos",
-            tweetPath: 'assets/tweet_v2_examples/tweet_with_photos.json',
+            tweetPath: 'not needed',
             tweetType: TweetType.v2,
           ),
 
