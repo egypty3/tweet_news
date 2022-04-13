@@ -49,7 +49,7 @@ class TweetPage extends StatelessWidget {
           // buildHeader("$mediaType TweetView"),
           buildTweet(tweetPath),
           // buildHeader("$mediaType CompactTweetView"),
-          // buildCompactTweetView(tweetPath),
+           buildCompactTweetView(tweetPath),
           if (quoteTweetPath != null) buildHeader("$mediaType Quote TweetView"),
           if (quoteTweetPath != null) buildTweet(quoteTweetPath!),
           if (quoteTweetPath != null)
@@ -200,8 +200,9 @@ class TweetPage extends StatelessWidget {
   Future<String> getSingleTweetWithPhoto() async {
 
     final response = await http.get(
-      // Uri.parse('https://api.twitter.com/2/tweets?ids=1502308288704167938,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
-      Uri.parse('https://api.twitter.com/2/tweets/1514026053773180929?tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
+      // Uri.parse('https://api.twitter.com/2/tweets?ids=1514026053773180929,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
+      Uri.parse('https://api.twitter.com/2/tweets?ids=1514026053773180929,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
+      //Uri.parse('https://api.twitter.com/2/tweets/1514026053773180929?tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
       // Send authorization headers to the backend.
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer AAAAAAAAAAAAAAAAAAAAAJ1iZgEAAAAACvta9ZpM8dCrnXhqfq9GVfk%2FsjU%3D02MakgCQZchjXiX0kPj2OnHyhJJnLxIuklZYcPsinP0DyHcFo1',
@@ -213,10 +214,12 @@ class TweetPage extends StatelessWidget {
        String responseString = response.body;
 
        //print(responseString);
-       var map = jsonDecode(responseString);
+       var decoded = jsonDecode(responseString);
+       List<dynamic>  list = decoded['data'];
+        var tweetJson = jsonEncode( list[0]);
 
-       // return {"data": map["data"][0].toString()}.toString();
-       return responseString;
+       return  jsonEncode( {'data': tweetJson});
+       // return responseString;
     }
     else {
       return await response.reasonPhrase.toString();
