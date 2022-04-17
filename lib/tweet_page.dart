@@ -201,8 +201,8 @@ class TweetPage extends StatelessWidget {
 
     final response = await http.get(
       // Uri.parse('https://api.twitter.com/2/tweets?ids=1514026053773180929,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
-      Uri.parse('https://api.twitter.com/2/tweets?ids=1514026053773180929,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
-      //Uri.parse('https://api.twitter.com/2/tweets/1514026053773180929?tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
+      // Uri.parse('https://api.twitter.com/2/tweets?ids=1514026053773180929,1502306748035743746,1502306683003023371,1502306820978876417&tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
+      Uri.parse('https://api.twitter.com/2/tweets/1515709129913995266?tweet.fields=attachments,author_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld&expansions=attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width'),
       // Send authorization headers to the backend.
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer AAAAAAAAAAAAAAAAAAAAAJ1iZgEAAAAACvta9ZpM8dCrnXhqfq9GVfk%2FsjU%3D02MakgCQZchjXiX0kPj2OnHyhJJnLxIuklZYcPsinP0DyHcFo1',
@@ -211,15 +211,18 @@ class TweetPage extends StatelessWidget {
     );
     final responseJson = jsonDecode(response.body);
     if (response.statusCode == 200) {
+
        String responseString = response.body;
 
-       //print(responseString);
-       var decoded = jsonDecode(responseString);
-       List<dynamic>  list = decoded['data'];
-        var tweetJson = jsonEncode( list[0]);
+       print(responseString);
+       // var decoded = jsonDecode(responseString);
+       // var list = decoded['data'];
+       // print(responseString);
+       //  var tweetJson = jsonEncode( list[0]);
 
-       return  jsonEncode( {'data': tweetJson});
-       // return responseString;
+       // return  jsonEncode( {'data': tweetJson});
+
+        return responseString;
     }
     else {
       return await response.reasonPhrase.toString();
